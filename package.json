@@ -1,0 +1,45 @@
+{
+	"name": "the-gratitude-tree",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test": "vitest",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.30.0",
+		"prettier": "^3.2.5",
+		"prettier-plugin-svelte": "^3.0.0",
+		"svelte": "^5.0.0-next.1",
+		"svelte-check": "^3.6.3",
+		"tslib": "^2.4.1",
+		"typescript": "^5.3.3",
+		"vite": "^5.0.0",
+		"vitest": "^1.0.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@passageidentity/passage-js": "^3.13.1",
+		"@passageidentity/passage-node": "^2.9.0",
+		"@supabase/auth-helpers-sveltekit": "^0.12.0",
+		"@supabase/supabase-js": "^2.39.3",
+		"@types/jsonwebtoken": "^9.0.5",
+		"jsonwebtoken": "^9.0.2",
+		"open-props": "^1.6.18",
+		"postcss-jit-props": "^1.0.14",
+		"postcss-preset-env": "^9.3.0"
+	}
+}
