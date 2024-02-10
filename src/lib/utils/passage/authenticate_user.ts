@@ -1,7 +1,7 @@
 import Passage from '@passageidentity/passage-node';
 import { PUBLIC_PASSAGE_APP_ID, PUBLIC_PASSAGE_API_KEY } from '$env/static/public';
 
-export async function get_user(req: Request): Promise<{ is_authorized: boolean; user_id: string }> {
+export async function auth_req(req: Request): Promise<{ is_authorized: boolean; user_id: string }> {
 	const passage = new Passage({
 		appID: PUBLIC_PASSAGE_APP_ID,
 		apiKey: PUBLIC_PASSAGE_API_KEY

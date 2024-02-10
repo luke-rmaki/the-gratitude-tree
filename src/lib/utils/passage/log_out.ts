@@ -3,6 +3,9 @@ import { goto } from '$app/navigation';
 
 export async function log_out() {
 	const session = await get_session();
-	await session.signOut();
-	await goto('/');
+	const success = await session.signOut();
+	console.log(success);
+	if (success) {
+		await goto('/');
+	}
 }
