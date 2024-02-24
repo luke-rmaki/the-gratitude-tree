@@ -3,8 +3,6 @@
 
 	const { data } = $props();
 
-	console.log(data);
-
 	async function signout() {
 		await log_out();
 	}

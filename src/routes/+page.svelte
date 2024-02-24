@@ -2,7 +2,6 @@
 	import { PUBLIC_PASSAGE_APP_ID } from '$env/static/public';
 
 	const { data } = $props();
-	console.log(data);
 </script>
 
 <main>

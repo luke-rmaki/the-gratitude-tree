@@ -3,9 +3,7 @@ import { goto } from '$app/navigation';
 
 export async function log_out() {
 	const session = await get_session();
-	const success = await session.signOut();
-	console.log(success);
-	if (success) {
-		await goto('/');
-	}
+	await session.signOut();
+	document.cookie = 'psg_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+	await goto('/');
 }
