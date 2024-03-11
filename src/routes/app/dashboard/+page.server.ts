@@ -7,7 +7,7 @@ export const load = async ({ locals }) => {
 
 	if (props.is_authorized) {
 		const supabase = get_supabase(props.user_id);
-		const { data } = await supabase.from('leafs').select();
+		const { data } = await supabase.from('leafs').select().order('date', { ascending: false });
 		return {
 			leafs: data
 		};

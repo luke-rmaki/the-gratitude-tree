@@ -1,10 +1,29 @@
 <script lang="ts">
 	import { log_out } from '$lib/utils/passage/log_out';
+	import { aesGcmDecrypt as decrypt } from '$lib/crypto/decrypt';
 	import LeafInput from '$lib/components/LeafInput.svelte';
 	import Branch from '$lib/components/Branch.svelte';
+	import { create_branch } from '$lib/state/branch.svelte.js';
+	import type { Database } from '../../../../database.types.js';
+	import { Temporal } from 'temporal-polyfill';
 
 	const { data } = $props();
 	const { leafs, user } = data;
+	const branch = create_branch();
+
+	type TheLeaf = Database['public']['Tables']['leafs']['Row'];
+
+	async function decrypt_leafs(leafs: TheLeaf[]) {
+		for await (const leaf of leafs) {
+			const content = await decrypt(leaf.content, user.user_id);
+			const my_leaf = { content, date: Temporal.PlainDateTime.from(leaf.date), id: leaf.id };
+			branch.add_leaf(my_leaf);
+		}
+	}
+
+	if (leafs && leafs.length > 0) {
+		decrypt_leafs(leafs);
+	}
 
 	async function signout() {
 		await log_out();
@@ -14,9 +33,9 @@
 <main>
 	<h1>My Gratitude Tree</h1>
 	<button id="signout" on:click={signout}>Sign Out</button>
-	<LeafInput />
+	<LeafInput {branch} />
 	{#if leafs && leafs.length > 0}
-		<Branch {leafs} user_id={user.user_id} />
+		<Branch {branch} />
 	{/if}
 </main>
 

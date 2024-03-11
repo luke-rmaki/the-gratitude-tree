@@ -1,28 +1,16 @@
 <script lang="ts">
 	import { aesGcmDecrypt as decrypt } from '$lib/crypto/decrypt';
+	import { Temporal } from 'temporal-polyfill';
 	import type { Database } from '../../../database.types';
-	import type { MyLeaf } from '../../types';
 	import Leaf from './Leaf.svelte';
+	import type { Branch } from '$lib/state/branch.svelte';
 
-	type TheLeaf = Database['public']['Tables']['leafs']['Row'];
-
-	const { leafs, user_id } = $props<{ leafs: TheLeaf[]; user_id: string }>();
-
-	let my_leafs: MyLeaf[] = $state([]);
-
-	async function decrypt_leafs() {
-		for await (const leaf of leafs) {
-			const content = await decrypt(leaf.content, user_id);
-			const my_leaf = { content, date_stamp: leaf.date, id: leaf.id };
-			my_leafs.push(my_leaf);
-		}
-	}
-	decrypt_leafs();
+	const { branch } = $props<{ branch: Branch }>();
 </script>
 
 <section>
-	{#if my_leafs}
-		{#each my_leafs as leaf, index}
+	{#if branch.leafs}
+		{#each branch.leafs as leaf, index}
 			<Leaf {leaf} {index} id={leaf.id} />
 		{/each}
 	{/if}

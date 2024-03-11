@@ -1,7 +1,26 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import type { Branch } from '$lib/state/branch.svelte';
+	import { Temporal } from 'temporal-polyfill';
+
+	const { branch } = $props<{ branch: Branch }>();
 </script>
 
-<form method="post" action="?/submit">
+<form
+	method="post"
+	action="?/submit"
+	use:enhance={({ formData }) => {
+		branch.add_leaf({
+			content: formData?.get('content')?.toString() || '',
+			date: Temporal.Now.plainDateTimeISO(),
+			id: ''
+		});
+		branch.refresh();
+		return ({ update }) => {
+			update();
+		};
+	}}
+>
 	<textarea name="content" />
 
 	<button type="submit">Submit</button>

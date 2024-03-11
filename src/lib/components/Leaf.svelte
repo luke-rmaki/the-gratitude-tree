@@ -3,7 +3,7 @@
 	import type { MyLeaf } from '../../types';
 
 	const { leaf, index, id } = $props<{ leaf: MyLeaf; index: number; id: string }>();
-	const date = Temporal.PlainDateTime.from(leaf.date_stamp);
+	const date = $derived(Temporal.PlainDateTime.from(leaf.date));
 
 	// cap id at 2 and return to 0
 	const capped = (index + 1) % 3;
@@ -11,7 +11,6 @@
 	async function delete_me() {
 		const res = await fetch('/api/leaf/delete', { method: 'POST', body: JSON.stringify({ id }) });
 		const data = await res.json();
-		console.log(data);
 	}
 </script>
 
