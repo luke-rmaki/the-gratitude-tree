@@ -1,21 +1,36 @@
 <script lang="ts">
 	import { Temporal } from 'temporal-polyfill';
 	import type { MyLeaf } from '../../types';
+	import { enhance } from '$app/forms';
+	import type { Branch } from '$lib/state/branch.svelte';
 
-	const { leaf, index, id } = $props<{ leaf: MyLeaf; index: number; id: string }>();
+	const { leaf, index, id, branch } = $props<{
+		leaf: MyLeaf;
+		index: number;
+		id: string;
+		branch: Branch; // theres probably a better way to do this
+	}>();
 	const date = $derived(Temporal.PlainDateTime.from(leaf.date));
 
 	// cap id at 2 and return to 0
 	const capped = (index + 1) % 3;
-
-	async function delete_me() {
-		const res = await fetch('/api/leaf/delete', { method: 'POST', body: JSON.stringify({ id }) });
-		const data = await res.json();
-	}
 </script>
 
 <div data-index={capped} data-id={id}>
-	<button on:click={delete_me}>X</button>
+	<form
+		action="?/delete"
+		method="post"
+		use:enhance={() => {
+			branch.remove_leaf(id);
+			branch.refresh();
+			return ({ update }) => {
+				update();
+			};
+		}}
+	>
+		<input type="hidden" value={id} name="id" />
+		<button type="submit">X</button>
+	</form>
 	<p>{date.toLocaleString('en-AU', { hourCycle: 'h12' })}</p>
 	<p>{leaf.content}</p>
 </div>

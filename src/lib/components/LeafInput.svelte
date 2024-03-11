@@ -8,7 +8,7 @@
 
 <form
 	method="post"
-	action="?/submit"
+	action="?/add"
 	use:enhance={({ formData }) => {
 		branch.add_leaf({
 			content: formData?.get('content')?.toString() || '',

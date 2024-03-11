@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { aesGcmDecrypt as decrypt } from '$lib/crypto/decrypt';
-	import { Temporal } from 'temporal-polyfill';
-	import type { Database } from '../../../database.types';
 	import Leaf from './Leaf.svelte';
 	import type { Branch } from '$lib/state/branch.svelte';
 
@@ -11,7 +8,7 @@
 <section>
 	{#if branch.leafs}
 		{#each branch.leafs as leaf, index}
-			<Leaf {leaf} {index} id={leaf.id} />
+			<Leaf {leaf} {branch} {index} id={leaf.id} />
 		{/each}
 	{/if}
 </section>

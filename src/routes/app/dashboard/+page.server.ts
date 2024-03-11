@@ -16,7 +16,7 @@ export const load = async ({ locals }) => {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	submit: async ({ request, locals }) => {
+	add: async ({ request, locals }) => {
 		const data = await request.formData();
 		const leaf = data.get('content');
 		if (leaf) {
@@ -31,5 +31,14 @@ export const actions = {
 			});
 			console.log(error);
 		}
+	},
+	delete: async ({ request, locals }) => {
+		const data = await request.formData();
+		const id = data.get('id');
+		const { error } = await get_supabase(locals.user.user_id).from('leafs').delete().eq('id', id);
+		if (!error) {
+			console.log(`Deleted ${id}`);
+		}
+		console.log(error);
 	}
 };
