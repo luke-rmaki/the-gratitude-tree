@@ -16,5 +16,7 @@
 	:global(h1) {
 		font-family: var(--font-sans);
 		color: var(--blue-8);
+		text-align: center;
+		padding-block-start: var(--size-5);
 	}
 </style>

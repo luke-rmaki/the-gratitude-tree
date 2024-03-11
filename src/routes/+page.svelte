@@ -26,10 +26,6 @@
 		min-height: 100vh;
 	}
 
-	h1 {
-		text-align: center;
-		margin-block-start: var(--size-5);
-	}
 	a {
 		padding: var(--size-3) var(--size-4);
 		border-radius: var(--border-size-3);
